@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>OMR Marking System</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+    <div>
+      <h1>OMR Marking System</h1>
+      <p>Sinjembela · free-first · Android tablet</p>
+    </div>
+  </div>
+  <span class="pill" id="apiStatusPill">●</span>
+</header>
+
+<nav class="tabs">
+  <button data-tab="setup" class="active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+    <span>Setup</span>
+  </button>
+  <button data-tab="key">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+    <span>Keys</span>
+  </button>
+  <button data-tab="scan">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+    <span>Scan</span>
+  </button>
+  <button data-tab="verify">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+    <span>Verify</span>
+  </button>
+  <button data-tab="results">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    <span>Results</span>
+  </button>
+  <button data-tab="classlist">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+    <span>Class</span>
+  </button>
+</nav>
+
+<main class="wrap">
+
+  <!-- SETUP TAB -->
+  <div class="tabpanel active" id="tab-setup">
+    <div class="card">
+      <h2><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Connection</h2>
+      <p class="hint" id="apiStatus"></p>
+    </div>
+
+    <div class="card">
+      <h2><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Exam</h2>
+      <div class="row">
+        <div><label>Exam ID</label><input type="text" id="examId" placeholder="EX2026G7MOCK"></div>
+        <div><label>Name</label><input type="text" id="examName" placeholder="2026 Grade 7 Mock"></div>
+        <div><label>Grade</label><input type="text" id="examGrade" placeholder="7"></div>
+      </div>
+      <button id="createExamBtn" class="mt">Save Exam</button>
+      <p class="hint" id="examStatus"></p>
+    </div>
+
+    <div class="card">
+      <h2><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Subject / Card Template</h2>
+      <div class="row">
+        <div>
+          <label>Template</label>
+          <select id="templateSelect">
+            <option value="ECZ_60">ECZ Standard (60Q, 3 blocks of 20)</option>
+            <option value="GENERIC_ROWS">Generic row-major</option>
+          </select>
+        </div>
+        <div><label>Subject ID</label><input type="text" id="subjectId" placeholder="SCIENCE"></div>
+        <div><label>Question count</label><input type="number" id="qCount" value="60"></div>
+        <div><label>Marks/question</label><input type="number" id="marksPerQ" value="1"></div>
+      </div>
+      <button id="saveExamSubjectBtn" class="mt">Save Exam Subject</button>
+      <p class="hint" id="examSubjectStatus">Active: <span id="currentExamSubjectId" class="pill-inline">not set</span></p>
+    </div>
+  </div>
+
+  <!-- MARKING KEY TAB -->
+  <div class="tabpanel" id="tab-key">
+    <div class="card">
+      <h2><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5"/></svg>Batch Marking Keys — multiple subjects at once</h2>
+      <p class="hint">
+        Enter blocks like this, one per subject (subject must already exist from the Setup tab):<br>
+        <code>### SCIENCE<br>1,B<br>2,D<br>...<br>### MATH<br>1,A<br>2,C<br>...</code>
+      </p>
+      <textarea id="keyInput" placeholder="### SCIENCE&#10;1,B&#10;2,D&#10;...&#10;60,B&#10;&#10;### MATH&#10;1,A&#10;..."></textarea>
+      <div class="row mt">
+        <button class="secondary" id="validateKeyBtn">Validate All</button>
+        <button id="saveKeyBtn">Save + Lock All</button>
+      </div>
+      <p class="hint" id="keyStatus"></p>
+    </div>
+
+    <div class="card">
+      <h2><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Active subject for scanning</h2>
+      <p class="hint">Whichever subject is selected here is the ONLY key used while scanning — prevents accidentally marking against the wrong subject.</p>
+      <select id="activeSubjectSelect" style="width:100%;"></select>
+      <p class="hint" id="activeSubjectStatus"></p>
+    </div>
+  </div>
+
+  <!-- SCAN TAB -->
+  <div class="tabpanel" id="tab-scan">
+    <div class="card">
+      <h2><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>1. Learner &amp; Card</h2>
+      <div class="row">
+        <div>
+          <label>Learner ID / Student Number</label>
+          <input type="text" id="learnerIdInput" placeholder="SPS/G7/2026/005">
+        </div>
+        <div id="learnerNameWrap" style="display:none;">
+          <label>Name</label>
+          <input type="text" id="learnerNameInput" placeholder="Auto-filled or type to register">
+        </div>
+      </div>
+      <p class="hint" id="learnerLookupStatus"></p>
+
+      <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none;">
+      <input type="file" id="galleryInput" accept="image/*" multiple style="display:none;">
+      <input type="file" id="pdfInput" accept="application/pdf" style="display:none;">
+      <div class="row mt">
+        <button id="takePhotoBtn"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>Take Photo</button>
+        <button class="secondary" id="chooseGalleryBtn"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Choose Photos (batch OK)</button>
+        <button class="secondary" id="choosePdfBtn"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>Choose PDF</button>
+      </div>
+      <p class="hint" id="batchStatus"></p>
+    </div>
+
+    <div class="card" id="orientCard" style="display:none;">
+      <h2>2. Orientation</h2>
+      <p class="hint" id="orientGuess"></p>
+      <div class="row">
+        <button class="secondary" id="rotateLeftBtn">Rotate ⟲</button>
+        <button class="secondary" id="rotateRightBtn">Rotate ⟳</button>
+        <button id="confirmOrientBtn">Looks correct →</button>
+      </div>
+      <div id="orientPreviewWrap" class="mt"><canvas id="orientCanvas"></canvas></div>
+    </div>
+
+    <div class="card" id="alignCard" style="display:none;">
+      <h2>3. Align Corners</h2>
+      <p class="step" id="stepLabel">Tap the TOP-LEFT corner of the answer card</p>
+      <div id="canvasWrap"><canvas id="srcCanvas"></canvas></div>
+      <div class="row mt">
+        <button class="secondary" id="resetCorners">Reset</button>
+        <button id="warpBtn" disabled>Correct &amp; Generate Grid →</button>
+      </div>
+      <p class="hint">Tap in order: top-left → top-right → bottom-right → bottom-left.</p>
+    </div>
+
+    <div class="card" id="calibCard" style="display:none;">
+      <h2>4. Calibrate &amp; Detect</h2>
+      <div class="row" id="calibFields"></div>
+      <div class="row mt">
+        <label>Sensitivity</label><input type="number" id="sensitivity" value="55">
+        <button id="detectBtn">Detect Bubbles</button>
+      </div>
+      <div id="warpedWrap" class="mt"><canvas id="warpedCanvas"></canvas></div>
+    </div>
+
+    <div class="card" id="scanResultsCard" style="display:none;">
+      <h2>5. Score &amp; Save</h2>
+      <div class="summary" id="scanSummary"></div>
+      <div class="score-preview" id="scorePreview"></div>
+      <div class="row mt">
+        <button class="secondary" id="sendToVerifyBtn">Review flagged answers →</button>
+        <button class="good" id="saveCardBtn">Save Card + Score</button>
+        <button id="nextInBatchBtn" style="display:none;">Next card in batch →</button>
+      </div>
+      <p class="hint" id="saveCardStatus"></p>
+    </div>
+  </div>
+
+  <!-- VERIFY TAB -->
+  <div class="tabpanel" id="tab-verify">
+    <div class="card">
+      <h2>Flagged Answers Only</h2>
+      <p class="hint" id="verifyCount"></p>
+      <div class="legend">
+        <span><i class="dot" style="background:var(--good)"></i>VALID</span>
+        <span><i class="dot" style="background:var(--muted)"></i>BLANK</span>
+        <span><i class="dot" style="background:var(--bad)"></i>MULTIPLE</span>
+        <span><i class="dot" style="background:var(--unc)"></i>UNCERTAIN</span>
+      </div>
+      <div class="table-scroll">
+        <table><thead><tr><th>Q</th><th>Detected</th><th>State</th><th>Confidence</th><th>Fix</th></tr></thead>
+        <tbody id="verifyBody"></tbody></table>
+      </div>
+      <button class="good mt" id="applyVerificationBtn">Apply Corrections &amp; Rescore</button>
+    </div>
+  </div>
+
+  <!-- RESULTS TAB -->
+  <div class="tabpanel" id="tab-results">
+    <div class="card">
+      <h2>Generate Final Results</h2>
+      <button id="generateResultsBtn">Generate Final Results</button>
+      <p class="hint" id="resultsStatus"></p>
+      <div id="resultsTableWrap" class="mt"></div>
+    </div>
+    <div class="card">
+      <h2>Sync Queue</h2>
+      <p class="hint" id="queueStatus"></p>
+      <button class="secondary" id="flushQueueBtn">Retry pending uploads</button>
+    </div>
+  </div>
+
+  <!-- CLASS LIST TAB -->
+  <div class="tabpanel" id="tab-classlist">
+    <div class="card">
+      <h2><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Class List — live</h2>
+      <p class="hint">Updates automatically as cards are scored. Refreshes every few seconds while this tab is open.</p>
+      <div id="classListWrap" class="mt"></div>
+    </div>
+  </div>
+
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/marking-engine.js"></script>
+<script src="js/omr-engine.js"></script>
+<script src="js/api-client.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
